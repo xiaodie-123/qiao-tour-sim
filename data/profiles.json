@@ -1,0 +1,17 @@
+[
+  {
+    "profile_id": "family",
+    "name": "亲子游客",
+    "description": "带孩子游览,偏好易于休息的节点,注意排队负担"
+  },
+  {
+    "profile_id": "senior",
+    "name": "老年游客",
+    "description": "偏好较慢节奏和遮蔽休息条件,避免长时间等待"
+  },
+  {
+    "profile_id": "individual",
+    "name": "普通散客",
+    "description": "关注展览内容和游览效率,可以根据拥挤情况调整路线"
+  }
+]

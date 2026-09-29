@@ -1,0 +1,59 @@
+{
+  "normal": {
+    "name": "normal",
+    "visitor_count": 100,
+    "duration_min": 120,
+    "seed": 0,
+    "profile_ratios": {
+      "family": 0.3,
+      "senior": 0.3,
+      "individual": 0.4
+    },
+    "arrival_window_min": 20,
+    "weather_change_min": null,
+    "weather_after": "clear",
+    "guidance_enabled": false,
+    "guidance_start_min": 20,
+    "guidance_acceptance": 0.6,
+    "max_visits": 4,
+    "visit_budget_min": 90
+  },
+  "rain": {
+    "name": "rain",
+    "visitor_count": 100,
+    "duration_min": 120,
+    "seed": 0,
+    "profile_ratios": {
+      "family": 0.3,
+      "senior": 0.3,
+      "individual": 0.4
+    },
+    "arrival_window_min": 20,
+    "weather_change_min": 30,
+    "weather_after": "rain",
+    "guidance_enabled": false,
+    "guidance_start_min": 20,
+    "guidance_acceptance": 0.6,
+    "max_visits": 4,
+    "visit_budget_min": 90
+  },
+  "rain_guide": {
+    "name": "rain_guide",
+    "visitor_count": 100,
+    "duration_min": 120,
+    "seed": 0,
+    "profile_ratios": {
+      "family": 0.3,
+      "senior": 0.3,
+      "individual": 0.4
+    },
+    "arrival_window_min": 20,
+    "weather_change_min": 30,
+    "weather_after": "rain",
+    "guidance_enabled": true,
+    "guidance_start_min": 20,
+    "guidance_acceptance": 0.6,
+    "max_visits": 4,
+    "visit_budget_min": 90
+  }
+}
