@@ -4,7 +4,7 @@ import zipfile
 from pathlib import Path
 
 BASE = Path(".")
-OUT = Path("../3-源代码.zip")
+OUT = Path("../提交材料/3-源代码.zip")
 
 EXCLUDE_DIRS = {".venv", "build", "dist", "tmp_pdf", "edge_profile", "edge_profile2", "__pycache__", "screenshots", "teammate_proj"}
 EXCLUDE_NAMES = {"cloudflared.exe", "web_home.html", "QiaoSim.spec", "deploy_key", "deploy_key.pub",

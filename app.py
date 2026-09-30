@@ -84,6 +84,7 @@ if st.session_state.get("loaded_spot") != spot_key:
     st.session_state.loaded_spot = spot_key
     st.session_state.pop("result", None)
     st.session_state.pop("cmp", None)
+    st.session_state.pop("plan", None)
 if spot_name == "全览":
     st.caption("山西省 5A 景区分布示意(非行政区划地图)。点击地图上的景区点位,或使用上方下拉,进入对应景区的运营沙盘。")
     event = st.plotly_chart(ui.build_spot_overview(spots), width="stretch", key="overview_chart",
@@ -354,6 +355,11 @@ with mid_col:
             loads_now = {item["node_id"]: item["load"] for item in frames[min(plan_minute, len(frames) - 1)]["nodes"]}
             st.session_state["plan"] = plan_route(nodes, edges, pol["groups"], plan_who, plan_weather, loads_now)
         plan = st.session_state.get("plan")
+        valid_ids = {node["node_id"] for node in nodes}
+        if plan and not all(stop["node_id"] in valid_ids for stop in plan["stops"]):
+            st.session_state.pop("plan", None)
+            plan = None
+            st.info("景区已切换,请重新点「生成推荐路线」。")
         if plan:
             st.plotly_chart(ui.build_route_figure(nodes, edges, plan), width="stretch",
                             config={"displayModeBar": False})
