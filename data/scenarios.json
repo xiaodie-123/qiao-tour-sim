@@ -1,14 +1,10 @@
 {
   "normal": {
     "name": "normal",
-    "visitor_count": 100,
+    "visitor_count": 200,
     "duration_min": 120,
     "seed": 0,
-    "profile_ratios": {
-      "family": 0.3,
-      "senior": 0.3,
-      "individual": 0.4
-    },
+    "profile_ratios": {"family": 0.3, "senior": 0.3, "individual": 0.4},
     "arrival_window_min": 20,
     "weather_change_min": null,
     "weather_after": "clear",
@@ -16,18 +12,17 @@
     "guidance_start_min": 20,
     "guidance_acceptance": 0.6,
     "max_visits": 4,
-    "visit_budget_min": 90
+    "visit_budget_min": 90,
+    "conflict_enabled": true,
+    "conflict_threshold": 1.8,
+    "events": []
   },
   "rain": {
     "name": "rain",
-    "visitor_count": 100,
+    "visitor_count": 200,
     "duration_min": 120,
     "seed": 0,
-    "profile_ratios": {
-      "family": 0.3,
-      "senior": 0.3,
-      "individual": 0.4
-    },
+    "profile_ratios": {"family": 0.3, "senior": 0.3, "individual": 0.4},
     "arrival_window_min": 20,
     "weather_change_min": 30,
     "weather_after": "rain",
@@ -35,18 +30,17 @@
     "guidance_start_min": 20,
     "guidance_acceptance": 0.6,
     "max_visits": 4,
-    "visit_budget_min": 90
+    "visit_budget_min": 90,
+    "conflict_enabled": true,
+    "conflict_threshold": 1.6,
+    "events": []
   },
   "rain_guide": {
     "name": "rain_guide",
-    "visitor_count": 100,
+    "visitor_count": 200,
     "duration_min": 120,
     "seed": 0,
-    "profile_ratios": {
-      "family": 0.3,
-      "senior": 0.3,
-      "individual": 0.4
-    },
+    "profile_ratios": {"family": 0.3, "senior": 0.3, "individual": 0.4},
     "arrival_window_min": 20,
     "weather_change_min": 30,
     "weather_after": "rain",
@@ -54,6 +48,71 @@
     "guidance_start_min": 20,
     "guidance_acceptance": 0.6,
     "max_visits": 4,
-    "visit_budget_min": 90
+    "visit_budget_min": 90,
+    "conflict_enabled": true,
+    "conflict_threshold": 1.6,
+    "events": []
+  },
+  "conflict_demo": {
+    "name": "conflict_demo",
+    "visitor_count": 240,
+    "duration_min": 120,
+    "seed": 0,
+    "profile_ratios": {"family": 0.3, "senior": 0.3, "individual": 0.4},
+    "arrival_window_min": 20,
+    "weather_change_min": null,
+    "weather_after": "clear",
+    "guidance_enabled": false,
+    "guidance_start_min": 20,
+    "guidance_acceptance": 0.6,
+    "max_visits": 4,
+    "visit_budget_min": 90,
+    "conflict_enabled": true,
+    "conflict_threshold": 1.4,
+    "conflict_cooldown": 10,
+    "events": []
+  },
+  "dispute_demo": {
+    "name": "dispute_demo",
+    "visitor_count": 200,
+    "duration_min": 120,
+    "seed": 0,
+    "profile_ratios": {"family": 0.3, "senior": 0.3, "individual": 0.4},
+    "arrival_window_min": 20,
+    "weather_change_min": null,
+    "weather_after": "clear",
+    "guidance_enabled": false,
+    "guidance_start_min": 20,
+    "guidance_acceptance": 0.6,
+    "max_visits": 4,
+    "visit_budget_min": 90,
+    "conflict_enabled": true,
+    "conflict_threshold": 1.6,
+    "events": [
+      {"minute": 25, "type": "dispute", "node_id": "N06", "duration": 10, "message": "花园入口处游客与工作人员发生争吵,服务暂停10分钟(演示事件)"},
+      {"minute": 45, "type": "dispute", "node_id": "N02", "duration": 8, "message": "在中堂内游客与讲解员发生争执,服务暂停8分钟(演示事件)"}
+    ]
+  },
+  "festival_demo": {
+    "name": "festival_demo",
+    "visitor_count": 220,
+    "duration_min": 120,
+    "seed": 0,
+    "profile_ratios": {"family": 0.3, "senior": 0.3, "individual": 0.4},
+    "arrival_window_min": 20,
+    "weather_change_min": null,
+    "weather_after": "clear",
+    "guidance_enabled": false,
+    "guidance_start_min": 20,
+    "guidance_acceptance": 0.6,
+    "max_visits": 4,
+    "visit_budget_min": 90,
+    "conflict_enabled": true,
+    "conflict_threshold": 1.6,
+    "events": [
+      {"minute": 25, "type": "performance", "node_id": "N14", "duration": 30, "message": "戏台互动演出开始,吸引大量游客(演示事件)"},
+      {"minute": 45, "type": "performance", "node_id": "N07", "duration": 30, "message": "民俗博物馆非遗互动体验开始(演示事件)"},
+      {"minute": 60, "type": "performance", "node_id": "N06", "duration": 30, "message": "花园快闪表演开始(演示事件)"}
+    ]
   }
 }

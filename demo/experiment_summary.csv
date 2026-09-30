@@ -1,0 +1,16 @@
+﻿scenario,seed,policy_hash,mean_wait_min,congested_node_minutes,peak_queue,exited,remaining
+normal,0,c6ea1f159a372cb9,2.2,62,6,100,0
+normal,1,c6ea1f159a372cb9,2.25,41,8,100,0
+normal,2,c6ea1f159a372cb9,4.21,52,17,100,0
+normal,3,c6ea1f159a372cb9,1.87,46,6,100,0
+normal,4,c6ea1f159a372cb9,2.71,54,12,100,0
+rain,0,c6ea1f159a372cb9,3.22,72,7,100,0
+rain,1,c6ea1f159a372cb9,3.95,67,11,100,0
+rain,2,c6ea1f159a372cb9,6.24,89,17,100,0
+rain,3,c6ea1f159a372cb9,3.19,77,9,100,0
+rain,4,c6ea1f159a372cb9,3.59,64,12,99,1
+rain_guide,0,c6ea1f159a372cb9,3.78,56,15,100,0
+rain_guide,1,c6ea1f159a372cb9,2.15,40,7,100,0
+rain_guide,2,c6ea1f159a372cb9,5.8,67,18,100,0
+rain_guide,3,c6ea1f159a372cb9,1.98,35,6,100,0
+rain_guide,4,c6ea1f159a372cb9,3.39,57,12,100,0

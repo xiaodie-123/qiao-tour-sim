@@ -1,34 +1,14 @@
-# 乔家大院游客仿真沙盘(qiao-tour-sim)
+# 运筹三晋
 
-华北五省计算机应用大赛参赛作品(内部开发期 2026-09-29 — 10-03)。
+给景区管理人员看的课程演示网页。它用三类游客的群体偏好，加上每个人自己的走路、排队和停留，回放 120 分钟里的拥堵，并比较下雨后开不开分流。
 
-一句话:网页沙盘模拟 100 名游客(亲子/老年/散客三类画像)在乔家大院约 10 个节点游览 120 分钟,第 30 分钟下雨,对比"第 20 分钟引导分流"与"不引导"的拥堵指标,提供轨迹回放、拥堵标记、结果对比与下载。
+这不是实时客流，也不是乔家大院的实测预测。地图坐标、容量、停留和走路时间都是演示假设。
 
-## 团队与分工
+## 直接打开
 
-- 队长:画像/场景配置、实验对比、验收与汇报
-- A:DeepSeek API 与游客策略
-- B:网页、整合与公网部署
-- C:仿真引擎与指标统计
-- D:资料、文档、测试与视频
+安装过 Python 3.12 后，双击 `启动沙盘.bat`。浏览器打开后，左侧点「开始模拟」或「对比雨天与分流」。
 
-## 目录结构
-
-| 路径 | 作用 | 负责人 |
-|---|---|---|
-| app.py / ui.py | 网页入口与绘图 | B |
-| contracts.py | 共同数据结构 | C 起草,B 审核 |
-| llm_client.py / policy.py / build_policies.py / smoke_api.py | API 调用与策略生成 | A |
-| simulator.py / metrics.py / run_sim.py | 仿真引擎、指标、命令行 | C |
-| checks/ | 正确性自检 | C |
-| experiments.py | 多场景多种子实验 | 队长 |
-| data/ | 地图、画像、场景、策略 | D 填表/队长配置/A 生成 |
-| docs/ | 设计文档与报告 | D 汇总、队长审定 |
-| prompts/ | 提示词 | A |
-| demo/ | 可公开回放示例 | A/B/C 提供、D 整理 |
-| outputs/ | 程序生成结果(不入库) | 程序 |
-
-## 本地运行
+终端里也可以：
 
 ```powershell
 py -3.12 -m venv .venv
@@ -36,12 +16,45 @@ py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m streamlit run app.py
 ```
 
-网页入口 app.py 开发中;环境装好后可先执行 `.\.venv\Scripts\python.exe -m streamlit hello` 验证环境。
+地址一般是 http://localhost:8501 。关掉网页不会停止程序，回到终端按 Ctrl+C。
 
-## 密钥
+## 页面上有什么
 
-复制 `.env.example` 为 `.env` 并填入真实密钥;`.env` 与 `.streamlit/secrets.toml` 不提交仓库。密钥只由队长保管与发放。
+- 参数：场景、人数（20–300）、随机种子、下雨时刻、分流时刻和服从比例
+- 模拟：点一次按钮才计算
+- 回放：图上的播放、暂停、重置和时间轴只看已经算好的结果
+- 拥堵：节点黄/红，右侧给出拥堵节点分钟
+- 对比：同一随机种子下，「只下雨」和「下雨并分流」两条曲线
+- 下载：JSON 和 CSV
+
+打开页面时如果存在 `demo/replay.json`，会先显示这场历史回放。
+
+## 不打开网页时怎么跑
+
+```powershell
+.\.venv\Scripts\python.exe build_policies.py --out data/policies.json
+.\.venv\Scripts\python.exe run_sim.py --scenario rain_guide --seed 0 --out outputs/rain_guide.json
+.\.venv\Scripts\python.exe experiments.py --seeds 0 1 2 3 4 --out outputs
+.\.venv\Scripts\python.exe -m checks.check_sim
+```
+
+`experiments.py` 跑 3 个场景 × 5 个种子，共 15 次，运行中不调用大模型。
+
+## 策略从哪来
+
+平时仿真只读 `data/policies.json`。当前六组都是 DeepSeek 生成，来源标记为 `llm`，模型名 `deepseek-flash`，指纹 `c6ea1f159a372cb9`。仿真时不再请求接口。
+
+队长要把真实密钥放在本机 `.env`（由 `.env.example` 复制，不要发到群里，不要放进压缩包），然后自己运行：
+
+```powershell
+.\.venv\Scripts\python.exe smoke_api.py
+.\.venv\Scripts\python.exe build_policies.py --out data/policies.json
+```
+
+成功后页面上的来源会变成大模型生成，并显示接口返回的模型名。密钥只放 `.env` 或云平台 Secrets。
 
 ## 数据声明
 
-地图为节点/道路示意图,坐标 0—100,不冒充经纬度;容量、停留时间等无实测数据的字段为队长批准的演示假设并标注来源;画像为建模画像;演示参数不代表乔家大院真实客流。
+节点名称参照乔家大院公开游览常识，用来做示意图。容量、遮蔽、停留和路时没有实测来源，表里写了「演示假设」。不要把这些数字写成景区官方数据。
+
+本项目借鉴 RAPPIE 论文里「用角色代理表达一类人」的思路，没有复现该论文，也没有使用它的数据集、情感模型或图神经网络。论文：Liao 等，My Words Imply Your Opinion: Reader Agent-Based Propagation Enhancement for Personalized Implicit Emotion Analysis，ACL 2025。仿真公式和排队规则是本项目自己写的，见 `docs/simulation_rules.md`。
