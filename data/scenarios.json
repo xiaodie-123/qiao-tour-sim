@@ -89,8 +89,8 @@
     "conflict_enabled": true,
     "conflict_threshold": 1.6,
     "events": [
-      {"minute": 25, "type": "dispute", "node_id": "N06", "duration": 10, "message": "花园入口处游客与工作人员发生争吵,服务暂停10分钟(演示事件)"},
-      {"minute": 45, "type": "dispute", "node_id": "N02", "duration": 8, "message": "在中堂内游客与讲解员发生争执,服务暂停8分钟(演示事件)"}
+      {"minute": 25, "type": "dispute", "node_id": "COURT_6", "duration": 10, "message": "花园入口处游客与工作人员发生争吵,服务暂停10分钟(演示事件)"},
+      {"minute": 45, "type": "dispute", "node_id": "HALL_ZZT", "duration": 8, "message": "在中堂内游客与讲解员发生争执,服务暂停8分钟(演示事件)"}
     ]
   },
   "festival_demo": {
@@ -110,9 +110,9 @@
     "conflict_enabled": true,
     "conflict_threshold": 1.6,
     "events": [
-      {"minute": 25, "type": "performance", "node_id": "N14", "duration": 30, "message": "戏台互动演出开始,吸引大量游客(演示事件)"},
-      {"minute": 45, "type": "performance", "node_id": "N07", "duration": 30, "message": "民俗博物馆非遗互动体验开始(演示事件)"},
-      {"minute": 60, "type": "performance", "node_id": "N06", "duration": 30, "message": "花园快闪表演开始(演示事件)"}
+      {"minute": 25, "type": "performance", "node_id": "G583792", "duration": 30, "message": "戏台互动演出开始,吸引大量游客(演示事件)"},
+      {"minute": 45, "type": "performance", "node_id": "G583798", "duration": 30, "message": "民俗博物馆非遗互动体验开始(演示事件)"},
+      {"minute": 60, "type": "performance", "node_id": "COURT_6", "duration": 30, "message": "花园快闪表演开始(演示事件)"}
     ]
   }
 }

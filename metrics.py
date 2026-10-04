@@ -31,8 +31,24 @@ def compute_metrics(frames, visitors, config):
     }
 
 
-def improvement_pct(base, inter):
-    """改善率 = (基线-干预)/基线*100%;基线<=0 返回 None(显示"不适用")。"""
-    if base is None or inter is None or base <= 0:
+def improvement_rate(base, treatment):
+    """改善率 =(基线 - 干预)/ 基线 × 100%。基线 <= 0 返回 None(显示「不适用」)。
+
+    保留 4 位小数,给 experiments.py 写 CSV 用。
+    """
+    if base is None or treatment is None or base <= 0:
         return None
-    return round((base - inter) / base * 100.0, 1)
+    return round((base - treatment) / base * 100.0, 4)
+
+
+def format_rate(rate):
+    """把改善率格式化成页面/报告里显示的中文文本。"""
+    if rate is None:
+        return "不适用"
+    return "%+.1f%%" % rate
+
+
+def improvement_pct(base, inter):
+    """改善率(页面用的版本,保留 1 位小数);基线 <= 0 返回 None(显示「不适用」)。"""
+    rate = improvement_rate(base, inter)
+    return None if rate is None else round(rate, 1)

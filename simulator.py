@@ -5,7 +5,9 @@ from collections import deque
 
 import networkx as nx
 
+from contracts import validate_config
 from metrics import compute_metrics
+from policy import policy_hash
 
 
 def _build_graph(nodes, edges):
@@ -31,6 +33,7 @@ def _assign_profiles(count, profile_ids, ratios, seed):
 
 
 def run_simulation(nodes, edges, profiles, policies, config):
+    validate_config(config)          # 比例之和、必填字段不对就直接抛 DataError,不带着错数据往下跑
     cfg = dict(config)
     node_by_id = {n["node_id"]: n for n in nodes}
     entry_id = next(n["node_id"] for n in nodes if n["kind"] == "entry")
@@ -153,6 +156,8 @@ def run_simulation(nodes, edges, profiles, policies, config):
             load_j = (inside[j] + len(queue[j])) / cap[j]
             loads[j] = load_j
             cav = p["crowd_aversion"] * (0.5 if weather == "rain" else 1.0)
+            if guidance_active and v["acceptance"] < guidance_acceptance:
+                cav *= 2.0      # 接受引导的游客更在意排队,系统据此重新推荐(分流机制)
             sc = (p["attraction_weights"].get(j, 0.6)
                   + node_boost(j)
                   - cav * min(load_j, 2.0)
@@ -164,15 +169,6 @@ def run_simulation(nodes, edges, profiles, policies, config):
                 best, best_score = j, sc
         if best is None:
             return exit_id
-        if guidance_active and v["acceptance"] < guidance_acceptance:
-            # 引导只在"首选节点已较拥挤"时,推荐附近更空闲的景点(避免无谓改道与扎堆)
-            if best is not None and loads.get(best, 0) <= 0.8:
-                return best
-            near = [j for j in loads if lengths[cur_id][j] <= guidance_radius
-                    and node_by_id[j]["kind"] == "attraction"]
-            if near:
-                near.sort(key=lambda j: (loads[j], -scores[j]))
-                return near[0]
         return best
 
     def start_walk(v, from_id, target, t):
@@ -238,7 +234,8 @@ def run_simulation(nodes, edges, profiles, policies, config):
             v = visitors[vid]
             vis_rows.append({"id": vid, "x": v["pos"][0], "y": v["pos"][1],
                              "status": v["status"], "profile_id": v["profile_id"],
-                             "node_id": v["node_id"], "mood": v["mood"]})
+                             "node_id": v["node_id"], "mood": v["mood"],
+                             "queue_minutes": v["queue_minutes"]})
         eff_rows = [{"node_id": nid, "type": e["type"], "remaining_min": e["end_min"] - t}
                     for nid, lst in effects.items() for e in lst if e["end_min"] > t]
         frames.append({"minute": t, "nodes": node_rows, "visitors": vis_rows,
@@ -348,6 +345,7 @@ def run_simulation(nodes, edges, profiles, policies, config):
         "mode": "llm_policy_hybrid" if any_llm else "rule_policy_fallback",
         "visitor_count": count,
         "duration_min": duration,
+        "policy_hash": policy_hash(policies),
         "event_counts": event_counters,
         "rerouted_visitors": rerouted_visitors,
     }

@@ -34,7 +34,8 @@ def main() -> None:
                 "seed": seed,
                 "policy_hash": result["meta"]["policy_hash"],
                 "mean_wait_min": metrics["mean_wait_min"],
-                "congested_node_minutes": metrics["congested_node_minutes"],
+                # metrics["congested_node_minutes"] 是"每个点各几分钟"的字典,这里要的是总数
+                "congested_node_minutes": metrics["total_congested_node_minutes"],
                 "peak_queue": metrics["peak_queue"],
                 "exited": metrics["exited"],
                 "remaining": metrics["remaining"],
@@ -44,7 +45,7 @@ def main() -> None:
                 paired[seed][scenario] = row
             print(
                 f"{scenario} seed={seed} 等待={metrics['mean_wait_min']} "
-                f"拥堵={metrics['congested_node_minutes']} 离园={metrics['exited']}"
+                f"拥堵={metrics['total_congested_node_minutes']} 离园={metrics['exited']}"
             )
     _write_summary(out / "experiment_summary.csv", rows)
     comparisons = _comparisons(paired, args.seeds)

@@ -207,8 +207,14 @@ if ("result" not in st.session_state and not st.session_state.get("skip_demo")
         and os.path.isfile(DEMO) and spot_name == "乔家大院"):
     with open(DEMO, encoding="utf-8") as handle:
         loaded = json.load(handle)
+    # 节点表已换成官方点位,旧回放文件可能对不上;对不上就不加载,避免地图报错。
+    ids_now = {node["node_id"] for node in nodes}
+    ids_demo = {nd["node_id"] for frame in loaded.get("frames", [])[:1] for nd in frame.get("nodes", [])}
+    if ids_demo and ids_demo <= ids_now:
         loaded["meta"]["spot"] = spot_name
         st.session_state["result"] = loaded
+    else:
+        st.caption("demo/replay.json 是用旧节点表算的,与当前节点对不上,已跳过;跑一次模拟即可生成新的回放。")
 
 qp = st.query_params
 if "autorun" in qp and "result" not in st.session_state:

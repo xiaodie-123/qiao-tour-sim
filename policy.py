@@ -137,6 +137,32 @@ def _validate_group_fields(g):
     return g
 
 
+def validate_policy_item(item, node_ids):
+    """校验一组策略能不能用:字段齐全、权重正好覆盖给定节点、数值在范围内。
+
+    不合法就抛 ValueError(DataError 也是 ValueError,调用方可以一起接)。
+    """
+    ids = set(node_ids)
+    weights = item.get("attraction_weights")
+    if not isinstance(weights, dict):
+        raise ValueError("attraction_weights 缺失或不是对象")
+    missing = sorted(ids - set(weights))
+    extra = sorted(set(weights) - ids)
+    if missing or extra:
+        raise ValueError("attraction_weights 没有正好覆盖全部非出入口节点: 缺 %s / 多 %s"
+                         % (missing, extra))
+    for key, value in weights.items():
+        if not isinstance(value, (int, float)) or not (0.0 <= float(value) <= 1.0):
+            raise ValueError("attraction_weights 数值越界: %s" % key)
+    for field, (low, high) in RANGES.items():
+        if field == "attraction_weights" or field not in item:
+            continue
+        value = item[field]
+        if not isinstance(value, (int, float)) or not (low <= float(value) <= high):
+            raise ValueError("字段越界: %s=%s" % (field, value))
+    return item
+
+
 def load_policies(path):
     with open(path, encoding="utf-8") as f:
         data = json.load(f)

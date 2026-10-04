@@ -1,4 +1,7 @@
-"""人数、容量、路线、队列和可重复性检查。"""
+"""人数、容量、路线、队列和可重复性检查。
+
+跑法:`python -m checks.check_sim`(要先在项目根目录)。全部通过会打印「全部检查通过」。
+"""
 
 from __future__ import annotations
 
@@ -9,6 +12,9 @@ from contracts import DataError, load_world
 from metrics import format_rate, improvement_rate
 from policy import validate_policy_item
 from simulator import run_simulation
+
+CHECK_COUNT = 100          # 自检固定用 100 人,页面上的场景配置是多少不影响这里
+CHECK_DURATION = 120
 
 
 def main() -> None:
@@ -31,15 +37,19 @@ def check_improvement_rate() -> None:
 
 
 def check_policy_rejection() -> None:
-    nodes, _, profiles, _, policies = load_world()
-    if len(policies["items"]) != 6:
+    nodes, _, _, _, policies = load_world()
+    if len(policies) != 6:
         raise AssertionError("应该有 6 组策略")
-    sample = copy.deepcopy(policies["items"][0])
-    sample["attraction_weights"]["N99"] = 0.5
+    ids = {node["node_id"] for node in nodes if node["kind"] in {"attraction", "service"}}
+    for key, group in policies.items():
+        # 权重必须正好覆盖全部非出入口节点,缺一个多一个都不行
+        validate_policy_item(group, ids)
+    sample = copy.deepcopy(policies[sorted(policies)[0]])
+    sample["attraction_weights"]["NOT_A_REAL_NODE"] = 0.5
     try:
-        validate_policy_item(sample, {node["node_id"] for node in nodes if node["kind"] in {"attraction", "service"}})
+        validate_policy_item(sample, ids)
     except ValueError:
-        print("通过：非法节点会被拒绝")
+        print("通过：策略覆盖全部节点，非法节点编号会被拒绝")
         return
     raise AssertionError("非法节点编号没有被拒绝")
 
@@ -72,7 +82,7 @@ def check_fifo_and_capacity() -> None:
         "visit_budget_min": 90,
     }
     result = run_simulation(nodes, edges, profiles, policies, config)
-    _assert_frames(result, nodes, 2, 40)
+    _assert_frames(result, nodes, edges, 2, 40)
     queued = [
         frame["minute"]
         for frame in result["frames"]
@@ -112,20 +122,23 @@ def check_reproducible() -> None:
 def check_full_qiao() -> None:
     nodes, edges, profiles, scenarios, policies = load_world()
     for name in ("normal", "rain", "rain_guide"):
-        result = run_simulation(nodes, edges, profiles, policies, scenarios[name])
-        _assert_frames(result, nodes, 100, 120)
-        if len(result["frames"]) != 121:
-            raise AssertionError(f"{name} 应该有 121 帧")
-    guide = run_simulation(nodes, edges, profiles, policies, scenarios["rain_guide"])
+        config = dict(scenarios[name])
+        config["visitor_count"] = CHECK_COUNT
+        result = run_simulation(nodes, edges, profiles, policies, config)
+        _assert_frames(result, nodes, edges, CHECK_COUNT, CHECK_DURATION)
+        if result["meta"]["policy_hash"] == "":
+            raise AssertionError(f"{name} 没有记录策略指纹")
+    guide = run_simulation(nodes, edges, profiles, policies, dict(scenarios["rain_guide"], visitor_count=CHECK_COUNT))
     types = {event["type"] for event in guide["events"]}
     if "weather" not in types or "guidance" not in types:
         raise AssertionError("雨天分流场景应该记录下雨和引导事件")
-    print("通过：三场景 100 人 121 帧")
+    print(f"通过：三场景 {CHECK_COUNT} 人 {CHECK_DURATION + 1} 帧")
 
 
-def _assert_frames(result: dict, nodes: list[dict], count: int, duration: int) -> None:
+def _assert_frames(result: dict, nodes: list[dict], edges: list[dict], count: int, duration: int) -> None:
     by_id = {node["node_id"]: node for node in nodes}
     capacities = {node["node_id"]: node["capacity"] for node in nodes}
+    segments = _segments(nodes, edges)
     if len(result["frames"]) != duration + 1:
         raise AssertionError("帧数不对")
     for frame in result["frames"]:
@@ -138,30 +151,49 @@ def _assert_frames(result: dict, nodes: list[dict], count: int, duration: int) -
         for node in frame["nodes"]:
             if node["inside"] > capacities[node["node_id"]]:
                 raise AssertionError(f"{node['node_id']} 超过容量")
-            expected = (node["inside"] + node["queue"]) / capacities[node["node_id"]]
+            # 引擎写帧时把负荷 round 到 3 位,这里必须用同一个口径比
+            expected = round((node["inside"] + node["queue"]) / capacities[node["node_id"]], 3)
             if abs(node["load"] - expected) > 1e-9:
                 raise AssertionError("负荷公式不对")
         for visitor in visitors:
-            _assert_position(visitor, by_id)
+            _assert_position(visitor, by_id, segments)
 
 
-def _assert_position(visitor: dict, by_id: dict) -> None:
+def _segments(nodes: list[dict], edges: list[dict]) -> list[tuple]:
+    by_id = {node["node_id"]: node for node in nodes}
+    return [
+        ((by_id[edge["from_id"]]["x"], by_id[edge["from_id"]]["y"]),
+         (by_id[edge["to_id"]]["x"], by_id[edge["to_id"]]["y"]))
+        for edge in edges
+    ]
+
+
+def _assert_position(visitor: dict, by_id: dict, segments: list[tuple]) -> None:
+    """在途的人必须落在某条道路上;排队和游览的人必须贴在节点上。"""
     status = visitor["status"]
     if status in {"not_arrived", "exited"}:
         return
-    node = by_id[visitor["node_id"]]
+    point = (visitor["x"], visitor["y"])
     if status == "walking":
-        end = by_id[visitor["edge_to"]]
-        frac = visitor["edge_pos"] / visitor["edge_travel"]
-        x = node["x"] + (end["x"] - node["x"]) * frac
-        y = node["y"] + (end["y"] - node["y"]) * frac
-        if abs(visitor["x"] - x) > 1e-6 or abs(visitor["y"] - y) > 1e-6:
-            raise AssertionError(f"{visitor['id']} 没有沿道路移动")
+        offset = min(_point_segment_distance(point, segment) for segment in segments)
+        if offset > 0.05:
+            raise AssertionError(f"{visitor['id']} 没有沿道路移动(偏离最近路段 {offset:.3f})")
         return
-    distance = math.hypot(visitor["x"] - node["x"], visitor["y"] - node["y"])
-    limit = 2.2 if status == "visiting" else 40
-    if distance > limit:
+    node = by_id[visitor["node_id"]]
+    if math.hypot(point[0] - node["x"], point[1] - node["y"]) > 1e-6:
         raise AssertionError(f"{visitor['id']} 的位置离开了节点")
+
+
+def _point_segment_distance(point: tuple, segment: tuple) -> float:
+    px, py = point
+    (ax, ay), (bx, by) = segment
+    vx, vy = bx - ax, by - ay
+    length2 = vx * vx + vy * vy
+    if length2 == 0:
+        return math.hypot(px - ax, py - ay)
+    t = ((px - ax) * vx + (py - ay) * vy) / length2
+    t = max(0.0, min(1.0, t))
+    return math.hypot(px - (ax + t * vx), py - (ay + t * vy))
 
 
 def _signature(result: dict) -> tuple:
@@ -183,7 +215,7 @@ def _first_minute(result: dict, visitor_id: str, status: str) -> int | None:
 def _last_wait(result: dict, visitor_id: str) -> int:
     for visitor in result["frames"][-1]["visitors"]:
         if visitor["id"] == visitor_id:
-            return visitor["wait_min"]
+            return visitor["queue_minutes"]
     raise AssertionError(f"找不到 {visitor_id}")
 
 
@@ -198,6 +230,8 @@ def _node(node_id, name, x, y, kind, capacity, service, dwell, sheltered) -> dic
         "service_per_min": service,
         "dwell_min": dwell,
         "sheltered": sheltered,
+        "source_url": "-",
+        "assumption_note": "测试",
     }
 
 
@@ -214,22 +248,21 @@ def _edge(edge_id, from_id, to_id, travel) -> dict:
 
 
 def _two_weather_policy(profile_id: str, weights: dict) -> dict:
-    items = []
+    """自检用的最小策略:同一个画像的晴天/雨天两组。"""
+    groups = {}
     for weather in ("clear", "rain"):
-        items.append(
-            {
-                "profile_id": profile_id,
-                "weather": weather,
-                "attraction_weights": dict(weights),
-                "crowd_aversion": 1,
-                "shelter_bonus": 0.2,
-                "dwell_multiplier": 1,
-                "summary": "测试策略",
-                "source": "rule_fallback",
-                "model": None,
-            }
-        )
-    return {"items": items, "generated_at": "test", "prompt_version": "test"}
+        groups[profile_id + "|" + weather] = {
+            "profile_id": profile_id,
+            "weather": weather,
+            "attraction_weights": dict(weights),
+            "crowd_aversion": 1,
+            "shelter_bonus": 0.2,
+            "dwell_multiplier": 1,
+            "summary": "测试策略",
+            "source": "rule_fallback",
+            "model": None,
+        }
+    return groups
 
 
 if __name__ == "__main__":

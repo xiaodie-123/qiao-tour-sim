@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1260" viewBox="0 0 1800 1260">
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#15233b" flood-opacity="0.14"/></filter>
+<marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#60738f"/></marker>
+<marker id="arrowOrange" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#d27a2e"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#f6f4ee"/>
+<text x="70" y="72" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="34" font-weight="700" fill="#18283f">乔家大院官方资料：节点名称与连接关系</text>
+<text x="70" y="108" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="17" fill="#53657d">依据官网“四堂一园”结构、官方电子导览点位，以及电子导览内置“全景游”轨迹整理。红色为官方明示；橙色为基于官方坐标/轨迹的推导。</text>
+<rect x="50" y="140" width="1700" height="390" rx="22" fill="#ffffff" stroke="#d9dee7" filter="url(#shadow)"/>
+<text x="80" y="184" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="24" font-weight="700" fill="#1c3049">A. 官网明示的“四堂一园”结构</text>
+<text x="80" y="213" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="16" fill="#67768b">官网原文：大院由在中堂、德兴堂、保元堂、宁守堂和乔家花园组成。</text>
+<rect x="715" y="220" width="370" height="70" rx="18" fill="#1e5d8f" filter="url(#shadow)"/>
+<text x="900" y="262" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="26" font-weight="700" fill="#ffffff">乔家大院景区</text>
+<line x1="900" y1="290" x2="190" y2="392" stroke="#d5d9e1" stroke-width="3"/>
+<rect x="55" y="392" width="270" height="86" rx="15" fill="#fff" stroke="#b9473a" stroke-width="2.5" filter="url(#shadow)"/>
+<text x="190" y="428" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="23" font-weight="700" fill="#1b2e47">在中堂</text>
+<text x="190" y="456" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="15" fill="#6b7788">囍字布局</text>
+<line x1="900" y1="290" x2="515" y2="392" stroke="#d5d9e1" stroke-width="3"/>
+<rect x="380" y="392" width="270" height="86" rx="15" fill="#fff" stroke="#b9473a" stroke-width="2.5" filter="url(#shadow)"/>
+<text x="515" y="428" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="23" font-weight="700" fill="#1b2e47">德兴堂</text>
+<text x="515" y="456" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="15" fill="#6b7788">乔致祥宅院</text>
+<line x1="900" y1="290" x2="840" y2="392" stroke="#d5d9e1" stroke-width="3"/>
+<rect x="705" y="392" width="270" height="86" rx="15" fill="#fff" stroke="#b9473a" stroke-width="2.5" filter="url(#shadow)"/>
+<text x="840" y="428" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="23" font-weight="700" fill="#1b2e47">保元堂</text>
+<text x="840" y="456" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="15" fill="#6b7788">乔超五所建</text>
+<line x1="900" y1="290" x2="1165" y2="392" stroke="#d5d9e1" stroke-width="3"/>
+<rect x="1030" y="392" width="270" height="86" rx="15" fill="#fff" stroke="#3f825d" stroke-width="2.5" filter="url(#shadow)"/>
+<text x="1165" y="428" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="23" font-weight="700" fill="#1b2e47">乔家花园</text>
+<text x="1165" y="456" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="15" fill="#6b7788">位于两堂之间</text>
+<line x1="900" y1="290" x2="1490" y2="392" stroke="#d5d9e1" stroke-width="3"/>
+<rect x="1355" y="392" width="270" height="86" rx="15" fill="#fff" stroke="#b9473a" stroke-width="2.5" filter="url(#shadow)"/>
+<text x="1490" y="428" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="23" font-weight="700" fill="#1b2e47">宁守堂</text>
+<text x="1490" y="456" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="15" fill="#6b7788">乔贵发故居</text>
+<path d="M 975 430 L 1030 430" stroke="#d27a2e" stroke-width="4" stroke-dasharray="8 7" marker-end="url(#arrowOrange)"/>
+<path d="M 1300 430 L 1355 430" stroke="#d27a2e" stroke-width="4" stroke-dasharray="8 7" marker-end="url(#arrowOrange)"/>
+<text x="1165" y="505" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="16" font-weight="600" fill="#b36626">官网明示：花园位于保元堂与宁守堂之间</text>
+<rect x="80" y="485" width="150" height="34" rx="17" fill="#f7e7e3"/><text x="155" y="508" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="15" fill="#9d3d32">第五院 = 在中堂</text>
+<rect x="1560" y="485" width="160" height="34" rx="17" fill="#e6f2e9"/><text x="1640" y="508" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="15" fill="#32704c">第六院曾改花园院</text>
+<rect x="50" y="555" width="1700" height="600" rx="22" fill="#ffffff" stroke="#d9dee7" filter="url(#shadow)"/>
+<text x="80" y="600" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="24" font-weight="700" fill="#1c3049">B. 官方“全景游”轨迹附近景点顺序</text>
+<text x="80" y="630" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="16" fill="#67768b">官方导览轨迹共25个折点、约915米；以下景点按点位投影到轨迹后的行进里程排序（不是景区标牌上的官方站序）。</text>
+<rect x="88" y="700" width="166" height="72" rx="13" fill="#fafbfc" stroke="#1e6a91" stroke-width="2.2" filter="url(#shadow)"/>
+<circle cx="112" cy="724" r="15" fill="#1e6a91"/>
+<text x="112" y="729" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" font-weight="700" fill="#fff">1</text>
+<text x="171" y="749" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="18" font-weight="600" fill="#1c3049">景区牌楼</text>
+<line x1="254" y1="736" x2="282" y2="736" stroke="#60738f" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="287" y="700" width="166" height="72" rx="13" fill="#fafbfc" stroke="#1e6a91" stroke-width="2.2" filter="url(#shadow)"/>
+<circle cx="311" cy="724" r="15" fill="#1e6a91"/>
+<text x="311" y="729" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" font-weight="700" fill="#fff">2</text>
+<text x="370" y="749" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="18" font-weight="600" fill="#1c3049">大门</text>
+<line x1="453" y1="736" x2="481" y2="736" stroke="#60738f" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="486" y="700" width="166" height="72" rx="13" fill="#fafbfc" stroke="#1e6a91" stroke-width="2.2" filter="url(#shadow)"/>
+<circle cx="510" cy="724" r="15" fill="#1e6a91"/>
+<text x="510" y="729" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" font-weight="700" fill="#fff">3</text>
+<text x="569" y="749" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="18" font-weight="600" fill="#1c3049">乔家大院</text>
+<line x1="652" y1="736" x2="680" y2="736" stroke="#60738f" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="685" y="700" width="166" height="72" rx="13" fill="#fafbfc" stroke="#5b6f89" stroke-width="2.2" filter="url(#shadow)"/>
+<circle cx="709" cy="724" r="15" fill="#5b6f89"/>
+<text x="709" y="729" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" font-weight="700" fill="#fff">4</text>
+<text x="768" y="749" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="18" font-weight="600" fill="#1c3049">大厨房</text>
+<line x1="851" y1="736" x2="879" y2="736" stroke="#60738f" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="884" y="700" width="166" height="72" rx="13" fill="#fafbfc" stroke="#5b6f89" stroke-width="2.2" filter="url(#shadow)"/>
+<circle cx="908" cy="724" r="15" fill="#5b6f89"/>
+<text x="908" y="729" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" font-weight="700" fill="#fff">5</text>
+<text x="967" y="749" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="18" font-weight="600" fill="#1c3049">乔景俨居室</text>
+<line x1="1050" y1="736" x2="1078" y2="736" stroke="#60738f" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="1083" y="700" width="166" height="72" rx="13" fill="#fafbfc" stroke="#5b6f89" stroke-width="2.2" filter="url(#shadow)"/>
+<circle cx="1107" cy="724" r="15" fill="#5b6f89"/>
+<text x="1107" y="729" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" font-weight="700" fill="#fff">6</text>
+<text x="1166" y="749" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="18" font-weight="600" fill="#1c3049">乔致庸居室</text>
+<line x1="1249" y1="736" x2="1277" y2="736" stroke="#60738f" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="1282" y="700" width="166" height="72" rx="13" fill="#fafbfc" stroke="#5b6f89" stroke-width="2.2" filter="url(#shadow)"/>
+<circle cx="1306" cy="724" r="15" fill="#5b6f89"/>
+<text x="1306" y="729" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" font-weight="700" fill="#fff">7</text>
+<text x="1365" y="749" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="18" font-weight="600" fill="#1c3049">乔景僖居室</text>
+<line x1="1448" y1="736" x2="1476" y2="736" stroke="#60738f" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="1481" y="700" width="166" height="72" rx="13" fill="#fafbfc" stroke="#5b6f89" stroke-width="2.2" filter="url(#shadow)"/>
+<circle cx="1505" cy="724" r="15" fill="#5b6f89"/>
+<text x="1505" y="729" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" font-weight="700" fill="#fff">8</text>
+<text x="1564" y="749" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="18" font-weight="600" fill="#1c3049">乔映霞居室</text>
+<path d="M 1631 772 C 1631 800, 110 813, 110 841" fill="none" stroke="#60738f" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="88" y="845" width="166" height="72" rx="13" fill="#fafbfc" stroke="#5b6f89" stroke-width="2.2" filter="url(#shadow)"/>
+<circle cx="112" cy="869" r="15" fill="#5b6f89"/>
+<text x="112" y="874" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" font-weight="700" fill="#fff">9</text>
+<text x="171" y="894" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="18" font-weight="600" fill="#1c3049">静怡</text>
+<line x1="254" y1="881" x2="282" y2="881" stroke="#60738f" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="287" y="845" width="166" height="72" rx="13" fill="#fafbfc" stroke="#5b6f89" stroke-width="2.2" filter="url(#shadow)"/>
+<circle cx="311" cy="869" r="15" fill="#5b6f89"/>
+<text x="311" y="874" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" font-weight="700" fill="#fff">10</text>
+<text x="370" y="894" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="18" font-weight="600" fill="#1c3049">乔映璜居室</text>
+<line x1="453" y1="881" x2="481" y2="881" stroke="#60738f" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="486" y="845" width="166" height="72" rx="13" fill="#fafbfc" stroke="#5b6f89" stroke-width="2.2" filter="url(#shadow)"/>
+<circle cx="510" cy="869" r="15" fill="#5b6f89"/>
+<text x="510" y="874" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" font-weight="700" fill="#fff">11</text>
+<text x="569" y="894" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="18" font-weight="600" fill="#1c3049">乔映南居室</text>
+<line x1="652" y1="881" x2="680" y2="881" stroke="#60738f" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="685" y="845" width="166" height="72" rx="13" fill="#fafbfc" stroke="#5b6f89" stroke-width="2.2" filter="url(#shadow)"/>
+<circle cx="709" cy="869" r="15" fill="#5b6f89"/>
+<text x="709" y="874" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" font-weight="700" fill="#fff">12</text>
+<text x="768" y="894" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="18" font-weight="600" fill="#1c3049">福德祠</text>
+<line x1="851" y1="881" x2="879" y2="881" stroke="#60738f" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="884" y="845" width="166" height="72" rx="13" fill="#fafbfc" stroke="#5b6f89" stroke-width="2.2" filter="url(#shadow)"/>
+<circle cx="908" cy="869" r="15" fill="#5b6f89"/>
+<text x="908" y="874" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" font-weight="700" fill="#fff">13</text>
+<text x="967" y="894" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="18" font-weight="600" fill="#1c3049">第二院</text>
+<line x1="1050" y1="881" x2="1078" y2="881" stroke="#60738f" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="1083" y="845" width="166" height="72" rx="13" fill="#fafbfc" stroke="#b9473a" stroke-width="2.2" filter="url(#shadow)"/>
+<circle cx="1107" cy="869" r="15" fill="#b9473a"/>
+<text x="1107" y="874" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" font-weight="700" fill="#fff">14</text>
+<text x="1166" y="894" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="18" font-weight="600" fill="#1c3049">在中堂</text>
+<line x1="1249" y1="881" x2="1277" y2="881" stroke="#60738f" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="1282" y="845" width="166" height="72" rx="13" fill="#fafbfc" stroke="#5b6f89" stroke-width="2.2" filter="url(#shadow)"/>
+<circle cx="1306" cy="869" r="15" fill="#5b6f89"/>
+<text x="1306" y="874" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" font-weight="700" fill="#fff">15</text>
+<text x="1365" y="894" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="18" font-weight="600" fill="#1c3049">家谱馆</text>
+<line x1="1448" y1="881" x2="1476" y2="881" stroke="#60738f" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="1481" y="845" width="166" height="72" rx="13" fill="#fafbfc" stroke="#b9473a" stroke-width="2.2" filter="url(#shadow)"/>
+<circle cx="1505" cy="869" r="15" fill="#b9473a"/>
+<text x="1505" y="874" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" font-weight="700" fill="#fff">16</text>
+<text x="1564" y="894" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="18" font-weight="600" fill="#1c3049">第五院</text>
+<path d="M 1631 917 C 1631 945, 110 958, 110 986" fill="none" stroke="#60738f" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="88" y="990" width="166" height="72" rx="13" fill="#fafbfc" stroke="#5b6f89" stroke-width="2.2" filter="url(#shadow)"/>
+<circle cx="112" cy="1014" r="15" fill="#5b6f89"/>
+<text x="112" y="1019" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" font-weight="700" fill="#fff">17</text>
+<text x="171" y="1039" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="18" font-weight="600" fill="#1c3049">教子有方展厅</text>
+<line x1="254" y1="1026" x2="282" y2="1026" stroke="#60738f" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="287" y="990" width="166" height="72" rx="13" fill="#fafbfc" stroke="#5b6f89" stroke-width="2.2" filter="url(#shadow)"/>
+<circle cx="311" cy="1014" r="15" fill="#5b6f89"/>
+<text x="311" y="1019" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" font-weight="700" fill="#fff">18</text>
+<text x="370" y="1039" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="18" font-weight="600" fill="#1c3049">第六院</text>
+<line x1="453" y1="1026" x2="481" y2="1026" stroke="#60738f" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="486" y="990" width="166" height="72" rx="13" fill="#fafbfc" stroke="#5b6f89" stroke-width="2.2" filter="url(#shadow)"/>
+<circle cx="510" cy="1014" r="15" fill="#5b6f89"/>
+<text x="510" y="1019" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" font-weight="700" fill="#fff">19</text>
+<text x="569" y="1039" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="18" font-weight="600" fill="#1c3049">第四院</text>
+<line x1="652" y1="1026" x2="680" y2="1026" stroke="#60738f" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="685" y="990" width="166" height="72" rx="13" fill="#fafbfc" stroke="#5b6f89" stroke-width="2.2" filter="url(#shadow)"/>
+<circle cx="709" cy="1014" r="15" fill="#5b6f89"/>
+<text x="709" y="1019" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" font-weight="700" fill="#fff">20</text>
+<text x="768" y="1039" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="18" font-weight="600" fill="#1c3049">议事厅</text>
+<line x1="851" y1="1026" x2="879" y2="1026" stroke="#60738f" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="884" y="990" width="166" height="72" rx="13" fill="#fafbfc" stroke="#5b6f89" stroke-width="2.2" filter="url(#shadow)"/>
+<circle cx="908" cy="1014" r="15" fill="#5b6f89"/>
+<text x="908" y="1019" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" font-weight="700" fill="#fff">21</text>
+<text x="967" y="1039" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="18" font-weight="600" fill="#1c3049">知足阁</text>
+<line x1="1050" y1="1026" x2="1078" y2="1026" stroke="#60738f" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="1083" y="990" width="166" height="72" rx="13" fill="#fafbfc" stroke="#5b6f89" stroke-width="2.2" filter="url(#shadow)"/>
+<circle cx="1107" cy="1014" r="15" fill="#5b6f89"/>
+<text x="1107" y="1019" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" font-weight="700" fill="#fff">22</text>
+<text x="1166" y="1039" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="18" font-weight="600" fill="#1c3049">九龙壁展馆</text>
+<line x1="1249" y1="1026" x2="1277" y2="1026" stroke="#60738f" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="1282" y="990" width="166" height="72" rx="13" fill="#fafbfc" stroke="#5b6f89" stroke-width="2.2" filter="url(#shadow)"/>
+<circle cx="1306" cy="1014" r="15" fill="#5b6f89"/>
+<text x="1306" y="1019" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" font-weight="700" fill="#fff">23</text>
+<text x="1365" y="1039" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="18" font-weight="600" fill="#1c3049">德兴堂</text>
+<line x1="1448" y1="1026" x2="1476" y2="1026" stroke="#60738f" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="1481" y="990" width="166" height="72" rx="13" fill="#fafbfc" stroke="#5b6f89" stroke-width="2.2" filter="url(#shadow)"/>
+<circle cx="1505" cy="1014" r="15" fill="#5b6f89"/>
+<text x="1505" y="1019" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" font-weight="700" fill="#fff">24</text>
+<text x="1564" y="1039" text-anchor="middle" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="18" font-weight="600" fill="#1c3049">第三院</text>
+<rect x="88" y="1090" width="1180" height="47" rx="12" fill="#fff4e8" stroke="#e1a663"/>
+<text x="110" y="1121" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="16" fill="#8f551e">官网讲解明示院序：福德祠（第一院） → 第二院 → 第三院 → 第四院 → 第五院（=在中堂） → 第六院（花园院）</text>
+<rect x="1295" y="1078" width="425" height="70" rx="12" fill="#eef4f9" stroke="#a8bfd2"/>
+<text x="1315" y="1105" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="16" font-weight="700" fill="#315474">服务节点</text>
+<text x="1315" y="1132" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="15" fill="#4d6378">出入口×3　厕所×5　停车场×1　游客中心×1</text>
+<text x="70" y="1218" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" fill="#68788d">数据文件：qjdy_nodes.csv / qjdy_edges.csv / qjdy_official_route.csv / qjdy_route_marker_proximity.csv</text>
+<text x="70" y="1244" font-family="PingFang SC, Arial Unicode MS, sans-serif" font-size="14" fill="#68788d">说明：公众号二维码可由官网核验，但公众号正文的公开接口需微信客户端；本图不对未取得的公众号正文作臆测。</text>
+</svg>

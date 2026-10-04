@@ -23,7 +23,8 @@ def plan_route(nodes: list[dict], edges: list[dict], policies: dict, profile_id:
         policy = items[(profile_id, weather)]
     else:
         policy = policies[profile_id + "|" + weather]
-    candidates = [node["node_id"] for node in nodes if node["kind"] in ("attraction", "service")]
+    # 推荐路线只推游览点。服务点(厕所/停车场/游客中心)是需求点,当景点推荐会很奇怪。
+    candidates = [node["node_id"] for node in nodes if node["kind"] == "attraction"]
 
     stops: list[dict] = []
     visited: set[str] = set()

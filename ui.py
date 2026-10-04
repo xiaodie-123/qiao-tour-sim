@@ -9,15 +9,18 @@ ANGRY_COLOR = "#FFD6A5"
 EVENT_COLORS = {"conflict": "#E76F51", "dispute": "#F4A261", "performance": "#2EC4B6",
                 "weather": "#4CC9F0", "guidance": "#E9C46A"}
 SHORT_NAMES = {
-    "N01": "检票", "N02": "在中堂", "N03": "德兴堂", "N04": "宁守堂", "N05": "保元堂",
-    "N06": "乔家花园", "N07": "民俗馆", "N08": "砖雕", "N09": "九龙灯", "N10": "万人球",
-    "N11": "犀牛镜", "N12": "祠堂", "N13": "书房", "N14": "戏台", "N15": "珍宝",
-    "N16": "票号", "N17": "影壁", "N18": "茶社", "N19": "卫生间", "N20": "出口",
-    "N21": "婚俗馆", "N22": "寿诞馆", "N23": "保元二院", "N24": "保元三院", "N25": "文创馆",
-    "N26": "宁守二院", "N27": "宁守三院", "N28": "宁守四院", "N29": "乔家学堂", "N30": "宅门",
-    "N31": "汇通天下", "N32": "非遗馆", "N33": "德兴二院", "N34": "德兴三院", "N35": "德兴四院",
-    "N36": "史料室", "N37": "六号花园", "N38": "一号院", "N39": "二号院", "N40": "五号院",
-    "N41": "大门", "N42": "九龙屏",
+    "G583802": "牌楼", "G583801": "大门", "G583803": "乔家大院",
+    "S93299": "厕所1", "S93300": "厕所2", "S93301": "厕所3",
+    "S93302": "厕所4", "S93303": "厕所5", "S93304": "出入口A",
+    "S93305": "出入口B", "S93306": "出入口C", "S93307": "停车场",
+    "S93308": "游客中心", "HALL_ZZT": "在中堂", "HALL_DXT": "德兴堂",
+    "COURT_2": "第二院", "COURT_3": "第三院", "COURT_4": "第四院",
+    "COURT_5": "第五院", "COURT_6": "第六院", "G583780": "大厨房",
+    "G583800": "福德祠", "G583798": "家谱馆", "G583797": "教子有方",
+    "G583795": "九龙壁", "G583784": "静怡", "G583791": "乔映南",
+    "G583786": "乔映璜", "G583785": "乔映霞", "G583783": "乔景僖",
+    "G583782": "乔景俨", "G583781": "乔致庸", "G583792": "议事厅",
+    "G583793": "知足阁",
 }
 EVENT_MARK = {"conflict": "冲突", "dispute": "纠纷", "performance": "演出"}
 
@@ -358,7 +361,7 @@ def plot_map(frame, nodes, edges):
         colors.append(load_color(nd["load"]))
         symbols.append({"entry": "square", "exit": "square", "service": "diamond"}.get(n["kind"], "circle"))
         sizes.append(16 if n["kind"] in ("entry", "exit") else 22)
-        short = n["name"] if len(n["name"]) <= 5 else n["name"][:4] + "…"
+        short = SHORT_NAMES.get(n["node_id"]) or (n["name"] if len(n["name"]) <= 5 else n["name"][:4] + "…")
         labels.append(short)
         texts.append("<b>%s</b><br>%s<br>园内 %d / 容量 %d<br>排队 %d<br>负荷 %.2f" % (
             n["name"],
@@ -870,7 +873,7 @@ def _nodes(frame, by_id):
         colors.append(load_color(nd["load"]))
         symbols.append({"entry": "square", "exit": "square", "service": "diamond"}.get(n["kind"], "circle"))
         sizes.append(13 if n["kind"] in ("entry", "exit") else 16)
-        short = n["name"] if len(n["name"]) <= 5 else n["name"][:4] + "…"
+        short = SHORT_NAMES.get(n["node_id"]) or (n["name"] if len(n["name"]) <= 5 else n["name"][:4] + "…")
         labels.append(short)
         texts.append("<b>%s</b><br>%s<br>园内 %d / 容量 %d<br>排队 %d<br>负荷 %.2f" % (
             n["name"], "露天" if n["sheltered"] == 0 else "有遮蔽",
@@ -936,11 +939,34 @@ def _title(frame, only_profile=None):
     return "第 %d 分钟 · %s · %s · 在园 %d 人" % (frame["minute"], weather, guide, len(active))
 
 
-def _map_layout(title, height=600):
+def _bounds(nodes):
+    """按节点坐标算绘图范围(留 8% 边距),这样各景区的路网形态按真实比例显示。"""
+    xs = [node["x"] for node in nodes]
+    ys = [node["y"] for node in nodes]
+    x0, x1, y0, y1 = min(xs), max(xs), min(ys), max(ys)
+    pad_x = max((x1 - x0) * 0.08, 2.0)
+    pad_y = max((y1 - y0) * 0.08, 2.0)
+    return x0 - pad_x, x1 + pad_x, y0 - pad_y, y1 + pad_y
+
+
+def _auto_height(bounds, base=360.0, extra=280.0, low=380, high=660):
+    """按纵横比自动定图高,避免长条形景区(如云冈石窟)上下留大片空白。"""
+    x0, x1, y0, y1 = bounds
+    span_x = max(x1 - x0, 1.0)
+    span_y = max(y1 - y0, 1.0)
+    return int(max(low, min(high, base + extra * (span_y / span_x))))
+
+
+def _map_layout(title, height=None, bounds=None):
+    if bounds is None:
+        bounds = (-1.0, 101.0, -1.0, 101.0)
+    x0, x1, y0, y1 = bounds
+    if height is None:
+        height = _auto_height(bounds)
     return dict(
         title=dict(text=title, font=dict(color="#F4FBF8", size=14, family="Microsoft YaHei"), x=1, xanchor="right"),
-        xaxis=dict(range=[-1, 101], visible=False, scaleanchor="y", scaleratio=1.35, constrain="domain", fixedrange=True),
-        yaxis=dict(range=[-1, 101], visible=False, constrain="domain", fixedrange=True),
+        xaxis=dict(range=[x0, x1], visible=False, scaleanchor="y", scaleratio=1, constrain="domain", fixedrange=True),
+        yaxis=dict(range=[y0, y1], visible=False, constrain="domain", fixedrange=True),
         height=height,
         margin=dict(l=8, r=108, t=56, b=36),
         plot_bgcolor="#123E38",
@@ -952,13 +978,13 @@ def _map_layout(title, height=600):
             bgcolor="rgba(0,0,0,0)",
         ),
         shapes=[{
-            "type": "rect", "layer": "below", "x0": 1, "y0": 1, "x1": 99, "y1": 99,
+            "type": "rect", "layer": "below", "x0": x0, "y0": y0, "x1": x1, "y1": y1,
             "line": {"color": "#E7D3A1", "width": 2.4}, "fillcolor": "#123E38",
         }],
     )
 
 
-def build_replay(frames, nodes, edges, only_profile=None, height=600):
+def build_replay(frames, nodes, edges, only_profile=None, height=None):
     """播放、暂停、重置和时间轴都在浏览器里翻已算好的帧，不再重新模拟。"""
     by_id = {n["node_id"]: n for n in nodes}
     start = next(frame for frame in frames if frame["minute"] == opening_minute(frames))
@@ -980,7 +1006,7 @@ def build_replay(frames, nodes, edges, only_profile=None, height=600):
         ],
     )
     figure.update_layout(
-        **_map_layout(_title(start, only_profile), height),
+        **_map_layout(_title(start, only_profile), height, _bounds(nodes)),
         updatemenus=[{
             "type": "buttons", "direction": "right", "x": 0, "y": 1.09, "xanchor": "left", "showactive": False,
             "bgcolor": "#2EC4B6", "bordercolor": "#2EC4B6", "font": {"color": "#06241F", "family": "Microsoft YaHei"},
@@ -1059,9 +1085,13 @@ def build_route_figure(nodes, edges, plan):
             textfont=dict(size=11, color="#D7EFE6", family="Microsoft YaHei"),
             marker=dict(size=11, color="#2A9D8F" if node["kind"] != "service" else "#E9C46A"),
             hoverinfo="skip", showlegend=False))
+    x0, x1, y0, y1 = _bounds(nodes)
     fig.update_layout(title=dict(text="推荐游览路线(按当前拥堵与画像偏好生成,演示)",
                                  font=dict(color="#FFF8E8", size=17)),
-                      xaxis=dict(visible=False), yaxis=dict(visible=False),
-                      height=440, margin=dict(l=20, r=20, t=50, b=20),
+                      xaxis=dict(range=[x0, x1], visible=False, scaleanchor="y",
+                                 scaleratio=1, constrain="domain", fixedrange=True),
+                      yaxis=dict(range=[y0, y1], visible=False, constrain="domain", fixedrange=True),
+                      height=_auto_height((x0, x1, y0, y1)),
+                      margin=dict(l=20, r=20, t=50, b=20),
                       plot_bgcolor="#0E2B26", paper_bgcolor="#0E2B26")
     return fig
